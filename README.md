@@ -2,7 +2,7 @@
 
 The JavaScript SDK allows you to use the [500px API](https://github.com/500px/api-documentation) through browser-side JavaScript.
 
-[Click here to view a demo of the JavaScript SDK](http://500px.github.com/500px-js-sdk/)
+[Click here to view a demo of the JavaScript SDK](http://500px.github.com/500px-js-sdk/)<br>
 [View the source for the demo](https://github.com/500px/500px-js-sdk/blob/master/examples/example1.html)
 ## Setup
 
