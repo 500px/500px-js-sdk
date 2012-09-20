@@ -8,7 +8,7 @@
     var self = this,
       oauth_token,
       container,
-      site_url = 'https://api.500px.com:444/',
+      site_url = 'https://api.500px.com/',
       version = 'v1',
       api_url = site_url + version,
       events = {},
