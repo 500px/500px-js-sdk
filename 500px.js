@@ -19,7 +19,8 @@
       original_method,
       random_method_name,
       handle_api_callback,
-      toParam,
+      encode_param_name,
+      object_to_params,
       fire_event,
       login_callback;
 
@@ -142,7 +143,7 @@
       tag_src = api_url + url + '.jsonp';
       data.callback = callback_function_name;
       tag_src += '?';
-      tag_src += toParam(data);
+      tag_src += object_to_params(data);
       tag.src = tag_src;
       document.body.appendChild(tag);
     };
@@ -368,14 +369,32 @@
 
     // Private methods
 
-    toParam = function (object) {
-      var string_parts = [], property;
+    function encode_param_name(name, root) {
+      if (root) {
+        return encodeURIComponent(root + '[' + name + ']');
+      } else {
+        return encodeURIComponent(name);
+      }
+    };
+
+    function object_to_params(object, root) {
+      var string_parts = [], property, i;
+
       for (property in object) {
         if (object.hasOwnProperty(property)) {
-          string_parts.push(encodeURIComponent(property) + '=' + encodeURIComponent(object[property]));
+          var value = object[property];
+          if (value instanceof Array) {
+            for (i = 0; i < value.length; i++) {
+              var encoded_value = encodeURIComponent(value[i]);
+              string_parts.push(encode_param_name(property, root) + '%5B%5D=' + encoded_value);
+            }
+          } else if (typeof value == 'object') {
+            string_parts.push(this.object_to_params(value, encode_param_name(property, root)));
+          } else {
+            string_parts.push(encode_param_name(property, root) + '=' + encodeURIComponent(value));
+          }
         }
       }
-
       return string_parts.join('&');
     };
 
